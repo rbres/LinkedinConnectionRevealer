@@ -1,13 +1,12 @@
-start = document.URL.indexOf("id=")+3;
-end = document.URL.indexOf("authType")-1;
-id = document.URL.substring(start, end);
-url = "https://www.linkedin.com/vsearch/p?&pivotType=cofc&pid=" + id;
-$.ajax(url).done(function(response) { 
-  text = response;
-  start = text.search("results_count");
-  relevant_string = text.substring(start, start+100);
-  new_start = relevant_string.search("003e")+4;
-  answer = relevant_string.substring(new_start, new_start+10);
-  answer = answer.substring(0, answer.indexOf("+"));
-  $(".connections-link").text($(".connections-link").text() + " ("+ answer + ")");
-});
+if(document.URL.indexOf("linkedin.com") > -1){
+  all_dds = document.getElementsByTagName("dd");
+  table_item = all_dds.item(2);
+  url = "https://www.linkedin.com/" + table_item.firstChild.getAttribute("href");
+  $.ajax(url).done(function(response) { 
+    text = response;
+    start = text.search("followerCount")+15;
+    end = text.search("activityCount")-2;
+    connections = text.substring(start, end);
+    $(".connections-link").text($(".connections-link").text() + " ("+ connections + ")");
+  });
+}
