@@ -1,8 +1,13 @@
-
-if(document.URL.indexOf("linkedin.com") > -1){
-  var text = $("#profile_v2_connections").next().text();
-  var search_string = "numConn%3A";
-  text = text.toLocaleString().slice(text.indexOf(search_string) + search_string.length);
-  var connections = text.substring(0, text.indexOf("%"));
-  $(".connections-link").text($(".connections-link").text() + " ("+ connections + ")");
-}
+start = document.URL.indexOf("id=")+3;
+end = document.URL.indexOf("authType")-1;
+id = document.URL.substring(start, end);
+url = "https://www.linkedin.com/vsearch/p?&pivotType=cofc&pid=" + id;
+$.ajax(url).done(function(response) { 
+  text = response;
+  start = text.search("results_count");
+  relevant_string = text.substring(start, start+100);
+  new_start = relevant_string.search("003e")+4;
+  answer = relevant_string.substring(new_start, new_start+10);
+  answer = answer.substring(0, answer.indexOf("+"));
+  $(".connections-link").text($(".connections-link").text() + " ("+ answer + ")");
+});

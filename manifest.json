@@ -1,7 +1,7 @@
  {
   "name": "LinkedIn Connection Revealer",
   "manifest_version": 2,
-  "version": "2",
+  "version": "3",
   "description": "Reveal the actual number of connections your LinkedIn contacts have!",
   "browser_action": {
     "name": "Manipulate DOM",
